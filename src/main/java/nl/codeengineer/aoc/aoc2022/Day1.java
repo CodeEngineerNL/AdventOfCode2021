@@ -39,10 +39,8 @@ public class Day1 {
         for (int i = 0; i < lines.size() - 2; i++) {
             int sum = lines.get(i) + lines.get(i + 1) + lines.get(i + 2);
 
-            if (prev != 0) {
-                if (sum > prev) {
-                    count++;
-                }
+            if (prev != 0 && (sum > prev)) {
+                   count++;
             }
 
             prev = sum;
