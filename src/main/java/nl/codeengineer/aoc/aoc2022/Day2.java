@@ -21,10 +21,10 @@ public class Day2 {
         List<Command> commands = getInput();
 
         for (Command command: commands) {
-            switch (command.direction()) {
-                case "forward" -> x = x + command.distance();
-                case "down" -> depth = depth + command.distance();
-                case "up" -> depth = depth - command.distance();
+            switch (command.direction) {
+                case "forward" -> x = x + command.distance;
+                case "down" -> depth = depth + command.distance;
+                case "up" -> depth = depth - command.distance;
             }
         }
 
@@ -39,13 +39,13 @@ public class Day2 {
         List<Command> commands = getInput();
 
         for (Command command: commands) {
-            switch (command.direction()) {
+            switch (command.direction) {
                 case "forward" -> {
-                    x = x + command.distance();
-                    depth = depth + (command.distance() * aim);
+                    x = x + command.distance;
+                    depth = depth + (command.distance * aim);
                 }
-                case "down" -> aim = aim + command.distance();
-                case "up" -> aim = aim - command.distance();
+                case "down" -> aim = aim + command.distance;
+                case "up" -> aim = aim - command.distance;
             }
         }
 
