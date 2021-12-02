@@ -1,4 +1,4 @@
-package nl.codeengineer.aoc.aoc2022;
+package nl.codeengineer.aoc.aoc2021;
 
 import java.io.IOException;
 import java.nio.file.Files;
