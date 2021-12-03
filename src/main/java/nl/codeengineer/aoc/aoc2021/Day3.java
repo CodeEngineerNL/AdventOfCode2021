@@ -23,7 +23,6 @@ public class Day3 {
         StringBuilder epsilon = new StringBuilder();
 
         for (int i = 0; i < len; i++) {
-
             if (getOneToZeroDiff(i, lines) > 0) {
                 gamma.append("1");
                 epsilon.append("0");
@@ -31,7 +30,6 @@ public class Day3 {
                 gamma.append("0");
                 epsilon.append("1");
             }
-
         }
 
         return Integer.parseInt(gamma.toString(), 2) * Integer.parseInt(epsilon.toString(), 2);
@@ -68,17 +66,8 @@ public class Day3 {
             final char oxygenFilterChar;
             final char scrubberFilterChar;
 
-            if (getOneToZeroDiff(i, oxygenLines) >= 0) {
-                oxygenFilterChar = '1';
-            } else {
-                oxygenFilterChar = '0';
-            }
-
-            if (getOneToZeroDiff(i, scrubberLines) >= 0) {
-                scrubberFilterChar = '0';
-            } else {
-                scrubberFilterChar = '1';
-            }
+            oxygenFilterChar = getOneToZeroDiff(i, oxygenLines) >= 0 ? '1' : '0';
+            scrubberFilterChar = getOneToZeroDiff(i, scrubberLines) >= 0 ? '0' : '1';
 
             if (oxygenLines.size() > 1) {
                 oxygenLines = oxygenLines.stream().filter(l -> l.charAt(charIndex) == oxygenFilterChar).collect(Collectors.toList());
