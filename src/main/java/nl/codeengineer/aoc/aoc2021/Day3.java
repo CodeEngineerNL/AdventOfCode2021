@@ -63,15 +63,13 @@ public class Day3 {
 
         for (int i = 0; i < len; i++) {
             final int charIndex = i;
-            final char oxygenFilterChar;
-            final char scrubberFilterChar;
 
             if (oxygenLines.size() > 1) {
-                oxygenFilterChar = getOneToZeroDiff(i, oxygenLines) >= 0 ? '1' : '0';
+                final char oxygenFilterChar = getOneToZeroDiff(i, oxygenLines) >= 0 ? '1' : '0';
                 oxygenLines = oxygenLines.stream().filter(l -> l.charAt(charIndex) == oxygenFilterChar).collect(Collectors.toList());
             }
             if (scrubberLines.size() > 1) {
-                scrubberFilterChar = getOneToZeroDiff(i, scrubberLines) >= 0 ? '0' : '1';
+                final char scrubberFilterChar = getOneToZeroDiff(i, scrubberLines) >= 0 ? '0' : '1';
                 scrubberLines = scrubberLines.stream().filter(l -> l.charAt(charIndex) == scrubberFilterChar).collect(Collectors.toList());
             }
         }
