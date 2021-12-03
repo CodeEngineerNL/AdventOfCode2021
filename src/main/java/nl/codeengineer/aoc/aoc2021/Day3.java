@@ -66,13 +66,12 @@ public class Day3 {
             final char oxygenFilterChar;
             final char scrubberFilterChar;
 
-            oxygenFilterChar = getOneToZeroDiff(i, oxygenLines) >= 0 ? '1' : '0';
-            scrubberFilterChar = getOneToZeroDiff(i, scrubberLines) >= 0 ? '0' : '1';
-
             if (oxygenLines.size() > 1) {
+                oxygenFilterChar = getOneToZeroDiff(i, oxygenLines) >= 0 ? '1' : '0';
                 oxygenLines = oxygenLines.stream().filter(l -> l.charAt(charIndex) == oxygenFilterChar).collect(Collectors.toList());
             }
             if (scrubberLines.size() > 1) {
+                scrubberFilterChar = getOneToZeroDiff(i, scrubberLines) >= 0 ? '0' : '1';
                 scrubberLines = scrubberLines.stream().filter(l -> l.charAt(charIndex) == scrubberFilterChar).collect(Collectors.toList());
             }
         }
