@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class Day6 {
 
@@ -14,43 +13,40 @@ public class Day6 {
     }
 
     private static long part1() throws IOException {
-        HashMap<Integer, Long> fishCounts = getInput();
+        long[] fishCounts = getInput();
 
         for (int i = 0; i < 80; i++) {
             handeStap(fishCounts);
         }
 
-        return fishCounts.values().stream().reduce(Long::sum).get();
-    }
+        return Arrays.stream(fishCounts).reduce(Long::sum).getAsLong();    }
 
     private static long part2() throws IOException {
-       HashMap<Integer, Long> fishCounts = getInput();
+        long[] fishCounts = getInput();
 
         for (int i = 0; i < 256; i++) {
             handeStap(fishCounts);
         }
 
-        return fishCounts.values().stream().reduce(Long::sum).get();
+        return Arrays.stream(fishCounts).reduce(Long::sum).getAsLong();
     }
 
-    private static void handeStap(HashMap<Integer, Long> counts) {
-        for (int i = 0; i < 9; i++) {
-            counts.put(i -1 , counts.get(i));
+    private static void handeStap(long[] counts) {
+        long newBorn = counts[0];
+        for (int i = 1; i < 9; i++) {
+            counts[i - 1] = counts[i];
         }
 
-        counts.put(6, counts.get(6) + counts.get(-1));
-        counts.put(8, counts.get(-1));
-        counts.put(-1, 0L);
+        counts[6] += newBorn;
+        counts[8] = newBorn;
     }
 
-    private static HashMap<Integer, Long> getInput() throws IOException {
-        HashMap<Integer, Long> result = new HashMap<>();
-        for (int i = -1; i < 9; i++) {
-            result.put(i, 0L);
-        }
+    private static long[] getInput() throws IOException {
+        long[] result = new long[9];
 
         Arrays.stream(Files.readAllLines(Path.of("inputs/day6-1.txt")).get(0).split(","))
-                .map(Integer::parseInt).forEach(i -> result.put(i, result.get(i) + 1));
+                .mapToInt(Integer::parseInt).forEach(val -> result[val]++);
+
         return result;
     }
 
