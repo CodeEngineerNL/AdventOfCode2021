@@ -16,26 +16,25 @@ public class Day6 {
         long[] fishCounts = getInput();
 
         for (int i = 0; i < 80; i++) {
-            handeStap(fishCounts);
-        }
-
-        return Arrays.stream(fishCounts).reduce(Long::sum).getAsLong();    }
-
-    private static long part2() throws IOException {
-        long[] fishCounts = getInput();
-
-        for (int i = 0; i < 256; i++) {
-            handeStap(fishCounts);
+            handleStep(fishCounts);
         }
 
         return Arrays.stream(fishCounts).reduce(Long::sum).getAsLong();
     }
 
-    private static void handeStap(long[] counts) {
-        long newBorn = counts[0];
-        for (int i = 1; i < 9; i++) {
-            counts[i - 1] = counts[i];
+    private static long part2() throws IOException {
+        long[] fishCounts = getInput();
+
+        for (int i = 0; i < 256; i++) {
+            handleStep(fishCounts);
         }
+
+        return Arrays.stream(fishCounts).reduce(Long::sum).getAsLong();
+    }
+
+    private static void handleStep(long[] counts) {
+        long newBorn = counts[0];
+        System.arraycopy(counts, 1, counts, 0, 8);
 
         counts[6] += newBorn;
         counts[8] = newBorn;
