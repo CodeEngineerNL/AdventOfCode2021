@@ -27,8 +27,6 @@ public class Day7 {
         return total;
     }
 
-
-
     private static long part2() throws IOException {
         List<Integer> input = getInput();
         double avg = input.stream().mapToInt(Integer::intValue).average().getAsDouble();
@@ -43,13 +41,10 @@ public class Day7 {
         long total = 0;
         for (Integer num: input) {
             long dist = Math.abs(num - pos);
-            for (int i = 1; i <= dist; i++) {
-                total += i;
-            }
+            total += (dist * (dist + 1)) / 2;
         }
         return total;
     }
-
 
     private static List<Integer> getInput() throws IOException {
         return new ArrayList<>(Arrays.stream(Files.readAllLines(Path.of("inputs/day7-1.txt")).get(0).split(","))
