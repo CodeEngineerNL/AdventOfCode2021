@@ -76,47 +76,23 @@ public class Day8 {
         uniques.remove(numPatterns[8]);
 
         // Of all numbers with 6 segments (0,6,9), only 9 contains all segments of 4
-        for (String value: uniques) {
-            if (value.length() == 6 && containsAll(value, numPatterns[4])) {
-                numPatterns[9] = value;
-            }
-        }
-
+        numPatterns[9] = uniques.stream().filter(e -> e.length() == 6 && containsAll(e, numPatterns[4])).toList().get(0);
         uniques.remove(numPatterns[9]);
 
         // only 0 and 6 have 6 segments. 0 contains all segments of 1, 6 does not
-        for (String value: uniques) {
-            if (value.length() == 6 && containsAll(value, numPatterns[1])) {
-                numPatterns[0] = value;
-            }
-        }
-
+        numPatterns[0] = uniques.stream().filter(e -> e.length() == 6 && containsAll(e, numPatterns[1])).toList().get(0);
         uniques.remove(numPatterns[0]);
 
         // One 6 has a length of 6 segments now.
-        for (String value: uniques) {
-            if (value.length() == 6) {
-                numPatterns[6] = value;
-            }
-        }
-
+        numPatterns[6] = uniques.stream().filter(e -> e.length() == 6).toList().get(0);
         uniques.remove(numPatterns[6]);
 
         // Only 2, 3 and 5 left. 3 contains all segments of 1
-        for (String value: uniques) {
-            if (containsAll(value, numPatterns[1])) {
-                numPatterns[3] = value;
-            }
-        }
-
+        numPatterns[3] = uniques.stream().filter(e -> containsAll(e, numPatterns[1])).toList().get(0);
         uniques.remove(numPatterns[3]);
 
-        // Only 2 and 5 left. 9 contains all segemnts of 5.
-        for (String value: uniques) {
-            if (containsAll(numPatterns[9], value)) {
-                numPatterns[5] = value;
-            }
-        }
+        // Only 2 and 5 left. 9 contains all segments of 5.
+        numPatterns[5] = uniques.stream().filter(e -> containsAll(numPatterns[9], e)).toList().get(0);
         uniques.remove(numPatterns[5]);
 
         // Only 2 is left now
