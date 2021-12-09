@@ -54,15 +54,11 @@ public class Day9 {
     }
 
     private static long calcBasin(final int x, final int y, final int[][] map, final boolean[][]visited) {
-        if (x < 0 || y < 0 || y >= map.length || x >= map[0].length || visited[y][x]) {
+        if (x < 0 || y < 0 || y >= map.length || x >= map[0].length || visited[y][x] || map[y][x] == 9) {
             return 0;
         }
 
         visited[y][x] = true;
-        if (map[y][x] == 9) {
-            return 0;
-        }
-
         int size = 1;
 
         size += calcBasin(x + 1, y, map, visited);
