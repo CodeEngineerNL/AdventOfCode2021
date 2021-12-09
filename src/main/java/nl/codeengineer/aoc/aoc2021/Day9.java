@@ -45,8 +45,8 @@ public class Day9 {
 
         List<Long> sizes = new ArrayList<>();
 
+        boolean[][] visited = new boolean[map.length][map[0].length];
         for (Point p: lowest) {
-            boolean[][] visited = new boolean[map.length][map[0].length];
             sizes.add(calcBasin(p.x, p.y, map, visited));
         }
 
