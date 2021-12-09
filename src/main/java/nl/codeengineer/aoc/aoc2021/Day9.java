@@ -54,36 +54,21 @@ public class Day9 {
     }
 
     private static long calcBasin(final int x, final int y, final int[][] map, final boolean[][]visited) {
-        if (visited[y][x]) {
+        if (x < 0 || y < 0 || y >= map.length || x >= map[0].length || visited[y][x]) {
             return 0;
         }
 
         visited[y][x] = true;
+        if (map[y][x] == 9) {
+            return 0;
+        }
+
         int size = 1;
 
-        int x1 = x + 1;
-        while (x1 < map[0].length && map[y][x1] != 9 && map[y][x1] > map[y][x] ) {
-            size += calcBasin(x1, y, map, visited);
-            x1++;
-        }
-
-        x1 = x - 1;
-        while (x1 >=0 && map[y][x1] != 9 && map[y][x1] > map[y][x] ) {
-            size += calcBasin(x1, y, map, visited);
-            x1--;
-        }
-
-        int y1 = y + 1;
-        while (y1 < map.length && map[y1][x] != 9 && map[y1][x] > map[y][x] ) {
-            size += calcBasin(x, y1, map, visited);
-            y1++;
-        }
-
-        y1 = y - 1;
-        while (y1 >=0 && map[y1][x] != 9 && map[y1][x] > map[y][x] ) {
-            size += calcBasin(x, y1, map, visited);
-            y1--;
-        }
+        size += calcBasin(x + 1, y, map, visited);
+        size += calcBasin(x - 1, y, map, visited);
+        size += calcBasin(x, y + 1, map, visited);
+        size += calcBasin(x, y - 1, map, visited);
 
         return size;
     }
