@@ -19,12 +19,13 @@ public class Day10 {
 
         for (String line : input) {
             char result = getFirstIllegalChar(line);
-            switch (result) {
-                case ')' -> score += 3;
-                case ']' -> score += 57;
-                case '}' -> score += 1197;
-                case '>' -> score += 25137;
-            }
+            score = score + switch (result) {
+                case ')' -> 3;
+                case ']' -> 57;
+                case '}' -> 1197;
+                case '>' -> 25137;
+                default -> 0;
+            };
         }
 
         return score;
@@ -42,12 +43,13 @@ public class Day10 {
             for (int i = 0; i < remainder.length(); i++) {
                 score *= 5;
 
-                switch (remainder.charAt(i)) {
-                    case ')' -> score += 1;
-                    case ']' -> score += 2;
-                    case '}' -> score += 3;
-                    case '>' -> score += 4;
-                }
+                score = score + switch (remainder.charAt(i)) {
+                    case ')' -> 1;
+                    case ']' -> 2;
+                    case '}' -> 3;
+                    case '>' -> 4;
+                    default -> 0;
+                };
             }
 
             scores.add(score);
@@ -63,30 +65,15 @@ public class Day10 {
 
         char wrong = 0;
 
-        for (int i = 0; i < line.length(); i++) {
-            switch (line.charAt(i)) {
-                case '[', '(', '{', '<' -> stack.push(line.charAt(i));
-                case ']' -> {
-                    if (stack.pop() != '[') {
-                        return line.charAt(i);
-                    }
-                }
-                case ')' -> {
-                    if (stack.pop() != '(') {
-                        return line.charAt(i);
-                    }
-                }
-                case '}' -> {
-                    if (stack.pop() != '{') {
-                        return line.charAt(i);
-                    }
-                }
-                case '>' -> {
-                    if (stack.pop() != '<') {
-                        return line.charAt(i);
-                    }
-                }
-            }
+        for (int i = 0; i < line.length() && wrong == 0; i++) {
+            wrong = switch (line.charAt(i)) {
+                case '[', '(', '{', '<' -> { stack.push(line.charAt(i)); yield 0; }
+                case ']' -> stack.pop() != '[' ? line.charAt(i) : 0;
+                case ')' -> stack.pop() != '(' ? line.charAt(i) : 0;
+                case '}' -> stack.pop() != '{' ? line.charAt(i) : 0;
+                case '>' -> stack.pop() != '<' ? line.charAt(i) : 0;
+                default -> 0;
+            };
         }
 
         return wrong;
