@@ -92,12 +92,13 @@ public class Day10 {
         StringBuilder remainder = new StringBuilder();
 
         while (!stack.isEmpty()) {
-            switch (stack.pop()) {
-                case '[' -> remainder.append(']');
-                case '(' -> remainder.append(")");
-                case '{' -> remainder.append("}");
-                case '<' -> remainder.append(">");
-            }
+             remainder.append(switch (stack.pop()) {
+                case '[' -> "]";
+                case '(' -> ")";
+                case '{' -> "}";
+                case '<' -> ">";
+                default -> "";
+            });
         }
 
         return remainder.toString();
