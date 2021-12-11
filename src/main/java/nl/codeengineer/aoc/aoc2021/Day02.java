@@ -51,8 +51,8 @@ public class Day02 implements AocSolver {
     private List<Command> getInput() throws IOException {
         return Files.readAllLines(Path.of("inputs/day2-1.txt"))
                 .stream().map(line -> {
-                    Scanner scanner = new Scanner(line);
-                    return new Command(scanner.next(), scanner.nextInt());
+                    String[] parts = line.split(" ");
+                    return new Command(parts[0], Integer.parseInt(parts[1]));
                 }).collect(Collectors.toList());
     }
 
