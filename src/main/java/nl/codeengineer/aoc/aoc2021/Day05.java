@@ -11,11 +11,8 @@ public class Day05 implements AocSolver {
 
     private List<Line> lines;
 
-    public Day05() throws IOException {
+    public long part1() throws IOException {
         this.lines = getInput();
-    }
-
-    public long part1() {
         Point max = getMaxCoord(lines);
         int[][]map = new int[max.x+1][max.y+1];
 
@@ -87,17 +84,17 @@ public class Day05 implements AocSolver {
         }
     }
 
-    private static List<Line> getInput() throws IOException {
+    private List<Line> getInput() throws IOException {
         List<String> lines = Files.readAllLines(Path.of("inputs/day5-1.txt"));
 
         return lines.stream().map(line -> {
-            Scanner scanner = new Scanner(line).useDelimiter("[, ]");
-            int x1 = scanner.nextInt();
-            int y1 = scanner.nextInt();
-            scanner.next();
-            int x2 = scanner.nextInt();
-            int y2 = scanner.nextInt();
-            return new Line(new Point(x1, y1), new Point(x2, y2));
+            String[] parts = line.split(" -> ");
+
+            String[] p1parts = parts[0].split(",");
+            String[] p2parts = parts[1].split(",");
+            return new Line(
+                    new Point(Integer.parseInt(p1parts[0]), Integer.parseInt(p1parts[1])),
+                    new Point(Integer.parseInt(p2parts[0]), Integer.parseInt(p2parts[1])));
         }).toList();
     }
 
