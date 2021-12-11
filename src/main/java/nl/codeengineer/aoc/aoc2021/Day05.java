@@ -1,22 +1,21 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class Day5 {
+public class Day05 implements AocSolver {
 
-    private static List<Line> lines;
+    private List<Line> lines;
 
-    public static void main(String[] args) throws IOException {
-        lines = getInput();
-
-        System.out.println(part1());
-        System.out.println(part2());
+    public Day05() throws IOException {
+        this.lines = getInput();
     }
 
-    private static long part1() {
+    public long part1() {
         Point max = getMaxCoord(lines);
         int[][]map = new int[max.x+1][max.y+1];
 
@@ -24,7 +23,7 @@ public class Day5 {
         return Arrays.stream(map).flatMapToInt(Arrays::stream).filter(num -> num > 1).count();
     }
 
-    private static long part2() {
+    public long part2() {
         Point max = getMaxCoord(lines);
         int[][]map = new int[max.x+1][max.y+1];
 

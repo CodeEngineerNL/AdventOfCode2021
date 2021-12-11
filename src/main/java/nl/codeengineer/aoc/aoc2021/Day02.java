@@ -1,5 +1,7 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,18 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Day2 {
+public class Day02 implements AocSolver {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(part1());
-        System.out.println(part2());
-    }
+    private List<Command> commands;
 
-    private static int part1() throws IOException {
-        int x = 0;
+    public long part1() throws IOException {
+        commands = getInput();
+        long x = 0;
         int depth = 0;
-
-        List<Command> commands = getInput();
 
         for (Command command: commands) {
             switch (command.direction) {
@@ -31,12 +29,10 @@ public class Day2 {
         return x * depth;
     }
 
-    private static int part2() throws IOException {
+    public long part2() throws IOException {
         int x = 0;
         int depth = 0;
         int aim = 0;
-
-        List<Command> commands = getInput();
 
         for (Command command: commands) {
             switch (command.direction) {
@@ -52,7 +48,7 @@ public class Day2 {
         return x * depth;
     }
 
-    private static List<Command> getInput() throws IOException {
+    private List<Command> getInput() throws IOException {
         return Files.readAllLines(Path.of("inputs/day2-1.txt"))
                 .stream().map(line -> {
                     Scanner scanner = new Scanner(line);

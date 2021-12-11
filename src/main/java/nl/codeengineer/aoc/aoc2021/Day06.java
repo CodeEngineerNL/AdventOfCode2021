@@ -1,18 +1,15 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-public class Day6 {
+public class Day06 implements AocSolver {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(part1());
-        System.out.println(part2());
-    }
-
-    private static long part1() throws IOException {
+   public long part1() throws IOException {
         long[] fishCounts = getInput();
 
         for (int i = 0; i < 80; i++) {
@@ -22,7 +19,7 @@ public class Day6 {
         return Arrays.stream(fishCounts).reduce(Long::sum).getAsLong();
     }
 
-    private static long part2() throws IOException {
+    public long part2() throws IOException {
         long[] fishCounts = getInput();
 
         for (int i = 0; i < 256; i++) {

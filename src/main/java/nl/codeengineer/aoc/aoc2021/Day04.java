@@ -1,24 +1,24 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class Day4 {
+public class Day04 implements AocSolver {
 
     private static final int CARDSIZE = 5;
 
-    private static List<Integer> drawOrder;
-    private static List<Card> cards;
+    private List<Integer> drawOrder;
+    private List<Card> cards;
 
-    public static void main(String[] args) throws IOException {
+    public Day04() throws IOException {
         parseInput();
-        System.out.println(part1());
-        System.out.println(part2());
     }
 
-    private static int part1() {
+    public long part1() {
         for (int num: drawOrder) {
             for (Card card: cards) {
                 card.markAsDrawn(num);
@@ -31,7 +31,7 @@ public class Day4 {
         return -1;
     }
 
-    private static int part2() {
+    public long part2() {
         Set<Card> allCards = new HashSet<>(cards);
 
         for (int num: drawOrder) {
@@ -50,7 +50,7 @@ public class Day4 {
         return -1;
     }
 
-    private static void parseInput() throws IOException {
+    private void parseInput() throws IOException {
         List<String> lines = Files.readAllLines(Path.of("inputs/day4-1.txt"));
 
         Iterator<String> lineIter = lines.iterator();

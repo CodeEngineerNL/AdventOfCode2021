@@ -1,19 +1,16 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day1 {
+public class Day01 implements AocSolver {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(part1());
-        System.out.println(part2());
-    }
-
-    private static int part1() throws IOException {
+    public long part1() throws IOException {
         List<Integer> lines = getInput();
 
         int count = 0;
@@ -31,7 +28,7 @@ public class Day1 {
                 .stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
-    private static int part2() throws IOException {
+    public long part2() throws IOException {
         List<Integer> lines = getInput();
 
         int count = 0;

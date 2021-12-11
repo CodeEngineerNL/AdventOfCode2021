@@ -1,5 +1,7 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,14 +9,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Day9 {
+public class Day09 implements AocSolver {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(part1());
-        System.out.println(part2());
-    }
-
-    private static long part1() throws IOException {
+  public long part1() throws IOException {
         int[][] map = getInput();
 
         List<Integer> lowest = new ArrayList<>();
@@ -30,7 +27,7 @@ public class Day9 {
         return lowest.stream().mapToInt(i -> i + 1).sum();
     }
 
-    private static long part2() throws IOException {
+    public long part2() throws IOException {
         int[][] map = getInput();
 
         List<Point> lowest = new ArrayList<>();

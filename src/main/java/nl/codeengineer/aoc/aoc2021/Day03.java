@@ -1,21 +1,17 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Day3 {
+public class Day03 implements AocSolver {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(part1());
-        System.out.println(part2());
-    }
-
-    private static int part1() throws IOException {
+    public long part1() throws IOException {
         List<String> lines = getInput();
 
         int len = lines.get(0).length();
@@ -32,7 +28,7 @@ public class Day3 {
             }
         }
 
-        return Integer.parseInt(gamma.toString(), 2) * Integer.parseInt(epsilon.toString(), 2);
+        return Long.parseLong(gamma.toString(), 2) * Long.parseLong(epsilon.toString(), 2);
     }
 
     /**
@@ -41,7 +37,7 @@ public class Day3 {
      * @param lines Lines of binary strings to check
      * @return Difference between the number of ones and zeroes at the given index
      */
-    private static int getOneToZeroDiff(int position, List<String> lines ) {
+    private int getOneToZeroDiff(int position, List<String> lines ) {
         int one = 0;
         int zero = 0;
         for (String line: lines) {
@@ -55,7 +51,7 @@ public class Day3 {
         return one - zero;
     }
 
-    private static int part2() throws IOException {
+    public long part2() throws IOException {
         List<String> oxygenLines = getInput();
         List<String> scrubberLines = new ArrayList<>(oxygenLines);
 

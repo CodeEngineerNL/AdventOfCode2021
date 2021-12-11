@@ -1,19 +1,16 @@
 package nl.codeengineer.aoc.aoc2021;
 
+import nl.codeengineer.aoc.AocSolver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Day8 {
+public class Day08 implements AocSolver {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(part1());
-        System.out.println(part2());
-    }
-
-    private static long part1() throws IOException {
+    public long part1() throws IOException {
         List<String> lines = getInput();
         long easyCount = 0;
         for (String line: lines) {
@@ -30,7 +27,7 @@ public class Day8 {
         return easyCount;
     }
 
-    private static long part2() throws IOException {
+    public long part2() throws IOException {
         List<String> lines = getInput();
         long total = 0;
         for (String line: lines) {
@@ -38,9 +35,9 @@ public class Day8 {
 
 
             List<String> uniques = Arrays.stream(parts[0].trim().split(" "))
-                    .map(Day8::sortString).collect(Collectors.toList());
+                    .map(Day08::sortString).collect(Collectors.toList());
 
-            List<String> output = Arrays.stream(parts[1].trim().split(" ")).map(Day8::sortString).toList();
+            List<String> output = Arrays.stream(parts[1].trim().split(" ")).map(Day08::sortString).toList();
 
             List<String> numSegments = Arrays.asList(calcNumSegments(uniques));
 
