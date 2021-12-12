@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
 
 public class Day08 implements AocSolver {
 
+    private List<String> lines;
+
     public long part1() throws IOException {
-        List<String> lines = getInput();
+        lines = getInput();
         long easyCount = 0;
         for (String line: lines) {
             String[] outputs = line.split("\\|")[1].trim().split(" ");
@@ -28,11 +30,9 @@ public class Day08 implements AocSolver {
     }
 
     public long part2() throws IOException {
-        List<String> lines = getInput();
         long total = 0;
         for (String line: lines) {
             String[] parts = line.split("\\|");
-
 
             List<String> uniques = Arrays.stream(parts[0].trim().split(" "))
                     .map(Day08::sortString).collect(Collectors.toList());
