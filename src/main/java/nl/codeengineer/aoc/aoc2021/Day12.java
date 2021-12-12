@@ -25,9 +25,8 @@ public class Day12 implements AocSolver {
 
     public int calcPaths(Map<String, Node> nodes, boolean visitOneSmallCaveTwice) {
         Node startNode = nodes.get("start");
-        Deque<Node> currentPath = new ArrayDeque<>();
 
-        return visitNodes(startNode, currentPath, visitOneSmallCaveTwice, false);
+        return visitNodes(startNode, new ArrayDeque<>(), visitOneSmallCaveTwice, false);
     }
 
     public int visitNodes(Node currentNode, Deque<Node> currentPath, boolean canVisitOneSmallTwice, boolean visitedSmallTwice) {
