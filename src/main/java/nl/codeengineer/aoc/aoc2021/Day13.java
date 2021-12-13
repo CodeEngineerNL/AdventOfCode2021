@@ -46,14 +46,14 @@ public class Day13 implements AocSolver {
 
         char[][] map = new char[height+1][width+1];
 
-        points.forEach(p -> map[p.y][p.x] = '#');
+        points.forEach(p -> map[(int) p.y][(int) p.x] = '#');
 
         for (int y = 0; y <= height; y++) {
+            StringBuilder line = new StringBuilder();
             for (int x = 0; x <= width; x++) {
-                char c = map[y][x] == '#' ? '#' : ' ';
-                System.out.print(c);
+                line.append(map[y][x] == '#' ? '#' : ' ');
             }
-            System.out.println();
+            System.out.println(line);
         }
     }
 
@@ -65,7 +65,7 @@ public class Day13 implements AocSolver {
         }
     }
 
-    private int foldPoint(int i, int fold) {
+    private long foldPoint(long i, long fold) {
         if (i > fold) {
             return fold - ( i - fold);
         } else {
@@ -80,18 +80,18 @@ public class Day13 implements AocSolver {
 
         points = splitted.get(false).stream().map(l -> {
             String[] parts = l.split(",");
-            return new Point(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            return new Point(Long.parseLong(parts[0]), Long.parseLong(parts[1]));
         }).collect(Collectors.toSet());
 
         folds = splitted.get(true).stream().map(l -> {
             String[] parts = l.replace("fold along ", "").split("=");
             if (parts[0].equals("y")) {
-                return new Point(0, Integer.parseInt(parts[1]));
+                return new Point(0, Long.parseLong(parts[1]));
             } else {
-                return new Point(Integer.parseInt(parts[1]), 0);
+                return new Point(Long.parseLong(parts[1]), 0);
             }
         }).toList();
     }
 
-    public record Point(int x, int y){}
+    public record Point(long x, long y){}
 }
