@@ -59,21 +59,17 @@ public class Day13 implements AocSolver {
 
     public Set<Point> doFold(Set<Point> points, Point foldPoint) {
         if (foldPoint.x == 0) {
-            return points.stream().map(p -> {
-                if (p.y > foldPoint.y) {
-                    return new Point(p.x, foldPoint.y - (p.y - foldPoint.y));
-                } else {
-                    return p;
-                }
-            }).collect(Collectors.toSet());
+            return points.stream().map(p -> new Point(p.x, foldPoint(p.y, foldPoint.y))).collect(Collectors.toSet());
         } else {
-            return points.stream().map(p -> {
-                if (p.x > foldPoint.x) {
-                    return new Point(foldPoint.x - (p.x - foldPoint.x), p.y);
-                } else {
-                    return p;
-                }
-            }).collect(Collectors.toSet());
+            return points.stream().map(p -> new Point(foldPoint(p.x, foldPoint.x), p.y)).collect(Collectors.toSet());
+        }
+    }
+
+    private int foldPoint(int i, int fold) {
+        if (i > fold) {
+            return fold - ( i - fold);
+        } else {
+            return i;
         }
     }
 
