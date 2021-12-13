@@ -26,30 +26,32 @@ public class Day12 implements AocSolver {
     public int calcPaths(Map<String, Node> nodes, boolean visitOneSmallCaveTwice) {
         Node startNode = nodes.get("start");
 
-        return visitNodes(startNode, new ArrayDeque<>(), visitOneSmallCaveTwice, false);
+        return visitNodes(startNode, visitOneSmallCaveTwice, null);
     }
 
-    public int visitNodes(Node currentNode, Deque<Node> currentPath, boolean canVisitOneSmallTwice, boolean visitedSmallTwice) {
+    public int visitNodes(Node currentNode, boolean canVisitOneSmallTwice, Node doubleVisited) {
         if (currentNode.name.equals("end")) {
             return 1;
         }
 
-        if (currentNode.name.toLowerCase().equals(currentNode.name) && currentPath.contains(currentNode)) {
-            if (!canVisitOneSmallTwice || "start".equals(currentNode.name) || visitedSmallTwice) {
+        if (currentNode.name.toLowerCase().equals(currentNode.name) && currentNode.visited) {
+            if (!canVisitOneSmallTwice || "start".equals(currentNode.name) || doubleVisited != null) {
                 return 0;
             }
-            visitedSmallTwice = true;
+            doubleVisited = currentNode;
         }
 
-        currentPath.push(currentNode);
+        currentNode.visited = true;
 
         int result = 0;
 
         for(Node childNode: currentNode.connected) {
-            result += visitNodes(childNode, currentPath, canVisitOneSmallTwice, visitedSmallTwice);
+            result += visitNodes(childNode, canVisitOneSmallTwice, doubleVisited);
         }
 
-        currentPath.pop();
+        if (currentNode != doubleVisited) {
+            currentNode.visited = false;
+        }
 
         return result;
     }
@@ -84,7 +86,16 @@ public class Day12 implements AocSolver {
     }
 
 
-    public record Node(String name, Set<Node> connected) {
+    public static class Node {
+        public final String name;
+        public final Set<Node> connected;
+        public boolean visited = false;
+
+        public Node(String name, Set<Node> connected) {
+            this.name = name;
+            this.connected = connected;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -95,7 +106,7 @@ public class Day12 implements AocSolver {
 
         @Override
         public int hashCode() {
-            return Objects.hash(name);
+            return name.hashCode();
         }
 
         @Override
