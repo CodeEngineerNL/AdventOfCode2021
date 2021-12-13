@@ -40,8 +40,8 @@ public class Day13 implements AocSolver {
         int height = 0;
 
         for (Point p: points) {
-            width = Integer.max(width, p.x);
-            height = Integer.max(height, p.y);
+            width = Integer.max(width,(int) p.x);
+            height = Integer.max(height, (int) p.y);
         }
 
         char[][] map = new char[height+1][width+1];
