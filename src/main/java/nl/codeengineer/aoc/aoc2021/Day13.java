@@ -44,14 +44,14 @@ public class Day13 implements AocSolver {
             height = Integer.max(height, (int) p.y);
         }
 
-        char[][] map = new char[height+1][width+1];
+        boolean[][] map = new boolean[height+1][width+1];
 
-        points.forEach(p -> map[(int) p.y][(int) p.x] = '#');
+        points.forEach(p -> map[(int) p.y][(int) p.x] = true);
 
         for (int y = 0; y <= height; y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x <= width; x++) {
-                line.append(map[y][x] == '#' ? '#' : ' ');
+                line.append(map[y][x] ? '#' : ' ');
             }
             System.out.println(line);
         }
