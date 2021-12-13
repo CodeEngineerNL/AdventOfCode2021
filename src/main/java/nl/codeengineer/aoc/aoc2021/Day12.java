@@ -30,12 +30,12 @@ public class Day12 implements AocSolver {
     }
 
     public int visitNodes(Node currentNode, boolean canVisitOneSmallTwice, Node doubleVisited) {
-        if (currentNode.name.equals("end")) {
+        if (currentNode.isEnd) {
             return 1;
         }
 
         if (currentNode.isSmall && currentNode.visited) {
-            if (!canVisitOneSmallTwice || "start".equals(currentNode.name) || doubleVisited != null) {
+            if (!canVisitOneSmallTwice || currentNode.isStart || doubleVisited != null) {
                 return 0;
             }
             doubleVisited = currentNode;
@@ -90,6 +90,8 @@ public class Day12 implements AocSolver {
         public final String name;
         public final Set<Node> connected;
         public final boolean isSmall;
+        public final boolean isEnd;
+        public final boolean isStart;
 
         public boolean visited = false;
 
@@ -98,6 +100,8 @@ public class Day12 implements AocSolver {
             this.connected = connected;
 
             isSmall = name.toLowerCase().equals(name);
+            isEnd = name.equals("end");
+            isStart = name.equals("start");
         }
 
         @Override
