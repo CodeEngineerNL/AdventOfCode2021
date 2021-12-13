@@ -34,7 +34,7 @@ public class Day12 implements AocSolver {
             return 1;
         }
 
-        if (currentNode.name.toLowerCase().equals(currentNode.name) && currentNode.visited) {
+        if (currentNode.isSmall && currentNode.visited) {
             if (!canVisitOneSmallTwice || "start".equals(currentNode.name) || doubleVisited != null) {
                 return 0;
             }
@@ -89,11 +89,15 @@ public class Day12 implements AocSolver {
     public static class Node {
         public final String name;
         public final Set<Node> connected;
+        public final boolean isSmall;
+
         public boolean visited = false;
 
         public Node(String name, Set<Node> connected) {
             this.name = name;
             this.connected = connected;
+
+            isSmall = name.toLowerCase().equals(name);
         }
 
         @Override
