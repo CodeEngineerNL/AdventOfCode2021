@@ -3,7 +3,6 @@ package nl.codeengineer.aoc.aoc2021;
 import nl.codeengineer.aoc.AocSolver;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -19,64 +18,63 @@ public class Day14 implements AocSolver {
     @Override
     public long part1() throws IOException {
         getInput();
-        return doSteps(10).longValue();
+        return doSteps(10);
     }
 
     @Override
     public long part2() throws IOException {
-        BigInteger value = doSteps(40);
-        return value.longValue();
+        return doSteps(40);
     }
 
-    private BigInteger doSteps(int numSteps) {
-        Map<String, BigInteger> pairCounts = getPairCounts();
+    private Long doSteps(int numSteps) {
+        Map<String, Long> pairCounts = getPairCounts();
 
         for (int i = 0; i < numSteps; i++) {
             pairCounts = handleStep(pairCounts);
         }
 
-        Map<Character, BigInteger> counts = getCharHistogram(pairCounts);
-        List<BigInteger> sorted = counts.values().stream().sorted(BigInteger::compareTo).toList();
-        return sorted.get(sorted.size() - 1).subtract(sorted.get(0));
+        Map<Character, Long> counts = getCharHistogram(pairCounts);
+        List<Long> sorted = counts.values().stream().sorted(Long::compareTo).toList();
+        return sorted.get(sorted.size() - 1) - sorted.get(0);
     }
 
-    private Map<Character, BigInteger> getCharHistogram(Map<String, BigInteger> pairCounts) {
-        Map<Character, BigInteger> counts = getCounts(pairCounts);
+    private Map<Character, Long> getCharHistogram(Map<String, Long> pairCounts) {
+        Map<Character, Long> counts = getCounts(pairCounts);
         Character last = polymer.charAt(polymer.length() - 1);
-        BigInteger lastCount = counts.get(last);
-        counts.put(last, lastCount == null ? BigInteger.ONE : lastCount.add(BigInteger.ONE));
+        Long lastCount = counts.get(last);
+        counts.put(last, lastCount == null ? 1 : lastCount + 1);
         return counts;
     }
 
-    private Map<String, BigInteger> getPairCounts() {
-        Map<String, BigInteger> pairCounts = new HashMap<>();
+    private Map<String, Long> getPairCounts() {
+        Map<String, Long> pairCounts = new HashMap<>();
         for (int i = 0; i < polymer.length() - 1; i++) {
             String pair = polymer.substring(i, i + 2);
-            BigInteger value = pairCounts.get(pair);
-            pairCounts.put(pair, value == null ? BigInteger.ONE : value.add(BigInteger.ONE));
+            Long value = pairCounts.get(pair);
+            pairCounts.put(pair, value == null ? 1 : value + 1);
         }
         return pairCounts;
     }
 
-    public Map<Character, BigInteger> getCounts(Map<String, BigInteger> pairs) {
-        Map<Character, BigInteger> result = new HashMap<>();
+    public Map<Character, Long> getCounts(Map<String, Long> pairs) {
+        Map<Character, Long> result = new HashMap<>();
 
-        for (Map.Entry<String, BigInteger> e: pairs.entrySet()) {
+        for (Map.Entry<String, Long> e: pairs.entrySet()) {
             Character c = e.getKey().charAt(0);
-            BigInteger value = e.getValue();
-            BigInteger count = result.get(c);
-            result.put(c, count == null ? value : count.add(value));
+            Long value = e.getValue();
+            Long count = result.get(c);
+            result.put(c, count == null ? value : count + value);
         }
 
         return  result;
     }
 
-    public Map<String, BigInteger> handleStep(Map<String, BigInteger> pairs) {
-        Map<String, BigInteger> result = new HashMap<>(pairs);
+    public Map<String, Long> handleStep(Map<String, Long> pairs) {
+        Map<String, Long> result = new HashMap<>(pairs);
 
-        for (Map.Entry<String, BigInteger> pairValue: pairs.entrySet()) {
-            BigInteger value = pairValue.getValue();
-            if (!value.equals(BigInteger.ZERO)) {
+        for (Map.Entry<String, Long> pairValue: pairs.entrySet()) {
+            Long value = pairValue.getValue();
+            if (value != 0) {
                 String pair = pairValue.getKey();
 
                 String newChar = insertionRules.get(pair);
@@ -85,7 +83,7 @@ public class Day14 implements AocSolver {
                     String newPair1 = pair.charAt(0) + newChar;
                     String newPair2 = newChar + pair.charAt(1);
 
-                    result.put(pair, result.get(pair).subtract(value));
+                    result.put(pair, result.get(pair) - value);
 
                     addPair(newPair1, result, value);
                     addPair(newPair2, result, value);
@@ -97,9 +95,9 @@ public class Day14 implements AocSolver {
         return result;
     }
 
-    public void addPair(String pair, Map<String, BigInteger> result, BigInteger count) {
-        BigInteger value = result.get(pair);
-        result.put(pair, value == null ? count : value.add(count));
+    public void addPair(String pair, Map<String, Long> result, Long count) {
+        Long value = result.get(pair);
+        result.put(pair, value == null ? count : value + count);
     }
 
     private void getInput() throws IOException {
