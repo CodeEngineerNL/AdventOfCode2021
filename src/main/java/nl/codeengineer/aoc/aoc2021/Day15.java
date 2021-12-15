@@ -29,7 +29,6 @@ public class Day15  implements AocSolver {
         int width = inputMap[0].length;
         int height = inputMap.length;
 
-
         for (int i = 0; i < 5; i++) {
             for (int k = 0; k < 5; k++) {
                 for (int y = 0; y < inputMap.length; y++) {
@@ -72,20 +71,21 @@ public class Day15  implements AocSolver {
         startNode.distance = 0;
 
         Set<Node> settledNodes = new HashSet<>();
-        Set<Node> unSettledNodes = new HashSet<>();
-        unSettledNodes.add(startNode);
 
-        while (!unSettledNodes.isEmpty()) {
-            Node evalNode = getNodeWithLowestDistance(unSettledNodes);
-            unSettledNodes.remove(evalNode);
+        PriorityQueue<Node> pq = new PriorityQueue<>(1000, Comparator.comparingLong(a -> a.distance));
+        pq.add(startNode);
+
+        while (!pq.isEmpty()) {
+            Node evalNode = getNodeWithLowestDistance(pq);
+            pq.remove(evalNode);
             settledNodes.add(evalNode);
-            evalNeighbors(evalNode, settledNodes, unSettledNodes);
+            evalNeighbors(evalNode, settledNodes, pq);
         }
 
 
     }
 
-    public void evalNeighbors(Node evalNode, Set<Node> settledNodes, Set<Node> unsettledNodes) {
+    public void evalNeighbors(Node evalNode, Set<Node> settledNodes, PriorityQueue<Node> pq) {
         evalNode.connectedNodes.forEach(node -> {
             if (!settledNodes.contains(node)) {
                 long distance = node.getWeight();
@@ -93,16 +93,15 @@ public class Day15  implements AocSolver {
 
                 if (newDist < node.distance) {
                     node.distance = newDist;
-                    unsettledNodes.add(node);
+                    pq.add(node);
                 }
             }
         });
     }
 
 
-    public Node getNodeWithLowestDistance(Set<Node> nodes) {
-        List<Node> sorted = nodes.stream().sorted(Comparator.comparingLong(n -> n.distance)).toList();
-        return sorted.get(0);
+    public Node getNodeWithLowestDistance(PriorityQueue<Node> pq) {
+        return pq.peek();
     }
 
     private Node[][] getInput() throws IOException {
