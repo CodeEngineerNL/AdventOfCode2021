@@ -19,8 +19,8 @@ public class Day15  implements AocSolver {
         Node startNode = nodes.get(0);
         Node endNode = nodes.get(nodes.size() - 1);
 
-        Map<Node, Long> result = calcPath(startNode, nodes);
-        return result.get(endNode);
+        calcPath(startNode);
+        return  endNode.distance;
     }
 
     public long part2() throws IOException {
@@ -38,7 +38,7 @@ public class Day15  implements AocSolver {
                         int newY = y + (height * k);
 
 
-                        int newWeight = inputMap[y][x].weight + (1 * i) + k;
+                        int newWeight = inputMap[y][x].weight + i + k;
 
                         while (newWeight > 9) {
                             newWeight -= 9;
@@ -54,8 +54,8 @@ public class Day15  implements AocSolver {
         Node startNode = nodes.get(0);
         Node endNode = nodes.get(nodes.size() - 1);
 
-        Map<Node, Long> result = calcPath(startNode, nodes);
-        return result.get(endNode);
+        calcPath(startNode);
+        return endNode.distance;
     }
 
     public void printMap(Node[][] map) {
@@ -68,33 +68,31 @@ public class Day15  implements AocSolver {
         }
     }
 
-    public Map<Node, Long> calcPath(Node startNode, List<Node> nodes) {
-        Map<Node, Long> distMap = new HashMap<>();
-        nodes.forEach(n -> distMap.put(n, Long.MAX_VALUE));
-        distMap.put(startNode, 0L);
+    public void calcPath(Node startNode) {
+        startNode.distance = 0;
 
         Set<Node> settledNodes = new HashSet<>();
         Set<Node> unSettledNodes = new HashSet<>();
         unSettledNodes.add(startNode);
 
         while (!unSettledNodes.isEmpty()) {
-            Node evalNode = getNodeWithLowestDistance(unSettledNodes, distMap);
+            Node evalNode = getNodeWithLowestDistance(unSettledNodes);
             unSettledNodes.remove(evalNode);
             settledNodes.add(evalNode);
-            evalNeighbors(evalNode, settledNodes, unSettledNodes, distMap);
+            evalNeighbors(evalNode, settledNodes, unSettledNodes);
         }
 
-        return distMap;
+
     }
 
-    public void evalNeighbors(Node evalNode, Set<Node> settledNodes, Set<Node> unsettledNodes, Map<Node, Long> distMap) {
+    public void evalNeighbors(Node evalNode, Set<Node> settledNodes, Set<Node> unsettledNodes) {
         evalNode.connectedNodes.forEach(node -> {
             if (!settledNodes.contains(node)) {
                 long distance = node.getWeight();
-                long newDist = distMap.get(evalNode) + distance;
+                long newDist = evalNode.distance + distance;
 
-                if (newDist < distMap.get(node)) {
-                    distMap.put(node, newDist);
+                if (newDist < node.distance) {
+                    node.distance = newDist;
                     unsettledNodes.add(node);
                 }
             }
@@ -102,13 +100,13 @@ public class Day15  implements AocSolver {
     }
 
 
-    public Node getNodeWithLowestDistance(Set<Node> nodes, Map<Node, Long> distMap) {
-        List<Node> sorted = nodes.stream().sorted(Comparator.comparingLong(distMap::get)).toList();
+    public Node getNodeWithLowestDistance(Set<Node> nodes) {
+        List<Node> sorted = nodes.stream().sorted(Comparator.comparingLong(n -> n.distance)).toList();
         return sorted.get(0);
     }
 
     private Node[][] getInput() throws IOException {
-        List<String> input = Files.readAllLines(Path.of("inputs/day15-test.txt"));
+        List<String> input = Files.readAllLines(Path.of("inputs/day15-1.txt"));
 
         Node[][] result = new Node[input.size()][input.get(0).length()];
 
@@ -157,6 +155,8 @@ public class Day15  implements AocSolver {
         public final int x;
         public final int y;
         public final List<Node> connectedNodes = new ArrayList<>();
+
+        public long distance = Long.MAX_VALUE;
 
         private final int weight;
 
