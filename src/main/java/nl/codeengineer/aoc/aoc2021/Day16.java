@@ -12,14 +12,19 @@ import java.util.List;
 public class Day16 implements AocSolver {
 
     String packetString;
+    Packet packet;
 
     @Override
     public long part1() throws IOException {
         packetString = getInput();
+        packet = parsePacket(packetString);
 
-        Packet result = parsePacket(packetString);
+        return calcVersionSum(packet);
+    }
 
-        return calcVersionSum(result);
+    @Override
+    public long part2() throws IOException {
+        return calcPacket(packet);
     }
 
     public int calcVersionSum(Packet packet) {
@@ -33,9 +38,18 @@ public class Day16 implements AocSolver {
         return total;
     }
 
-    @Override
-    public long part2() throws IOException {
-        return 0;
+    public long calcPacket(Packet packet) {
+        return switch (packet.typeID) {
+            case 0 -> packet.subPackets.stream().mapToLong(this::calcPacket).sum();
+            case 1 -> packet.subPackets.stream().mapToLong(this::calcPacket).reduce(1, Math::multiplyExact);
+            case 2 -> packet.subPackets.stream().mapToLong(this::calcPacket).min().getAsLong();
+            case 3 -> packet.subPackets.stream().mapToLong(this::calcPacket).max().getAsLong();
+
+            case 5 -> calcPacket(packet.subPackets.get(0)) > calcPacket(packet.subPackets.get(1)) ? 1 : 0;
+            case 6 -> calcPacket(packet.subPackets.get(0)) < calcPacket(packet.subPackets.get(1)) ? 1 : 0;
+            case 7 -> calcPacket(packet.subPackets.get(0)) == calcPacket(packet.subPackets.get(1)) ? 1 : 0;
+            default -> packet.getNum();
+        };
     }
 
     public Packet parsePacket(String packetString) {
@@ -86,8 +100,6 @@ public class Day16 implements AocSolver {
                 while (i < end) {
                     i = parseOnePacket(packetString, i, packet.subPackets);
                 }
-
-
             } else {
                 String numPacketsString = packetString.substring(i, i+11);
                 int numPackets = Integer.parseInt(numPacketsString, 2);
@@ -99,7 +111,6 @@ public class Day16 implements AocSolver {
         }
 
         return i;
-
     }
 
     private String getInput() throws IOException {
@@ -111,20 +122,11 @@ public class Day16 implements AocSolver {
         public final int typeID;
         public final List<Packet> subPackets = new ArrayList<>();
 
-        private String operator;
         private long num;
 
         public Packet(int version, int typeID) {
             this.version = version;
             this.typeID = typeID;
-        }
-
-        public String getOperator() {
-            return operator;
-        }
-
-        public void setOperator(String operator) {
-            this.operator = operator;
         }
 
         public long getNum() {
@@ -134,5 +136,7 @@ public class Day16 implements AocSolver {
         public void setNum(long num) {
             this.num = num;
         }
+
+
     }
 }
