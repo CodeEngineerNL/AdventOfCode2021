@@ -36,7 +36,6 @@ public class Day15  implements AocSolver {
                         int newX = x + (width * i);
                         int newY = y + (height * k);
 
-
                         int newWeight = inputMap[y][x].weight + i + k;
 
                         while (newWeight > 9) {
@@ -72,7 +71,7 @@ public class Day15  implements AocSolver {
 
         Set<Node> settledNodes = new HashSet<>();
 
-        PriorityQueue<Node> pq = new PriorityQueue<>(1000, Comparator.comparingLong(a -> a.distance));
+        PriorityQueue<Node> pq = new PriorityQueue<>(100, Comparator.comparingLong(a -> a.distance));
         pq.add(startNode);
 
         while (!pq.isEmpty()) {
@@ -81,8 +80,6 @@ public class Day15  implements AocSolver {
             settledNodes.add(evalNode);
             evalNeighbors(evalNode, settledNodes, pq);
         }
-
-
     }
 
     public void evalNeighbors(Node evalNode, Set<Node> settledNodes, PriorityQueue<Node> pq) {
