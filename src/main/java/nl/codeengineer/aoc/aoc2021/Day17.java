@@ -1,17 +1,14 @@
 package nl.codeengineer.aoc.aoc2021;
 
 import nl.codeengineer.aoc.AocSolver;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Day17  implements AocSolver {
 
-    private final Set<Pair<Integer, Integer>> hits = new HashSet<>();
+    private int hits = 0;
 
     @Override
     public long part1() throws IOException {
@@ -41,7 +38,7 @@ public class Day17  implements AocSolver {
                 }
 
                 if (area.isHit(probe.getX(), probe.getY())) {
-                    hits.add(Pair.of(xv, yv));
+                    hits++;
                     if (maxYThisRound > maxY) {
                         maxY = maxYThisRound;
                     }
@@ -54,7 +51,7 @@ public class Day17  implements AocSolver {
 
     @Override
     public long part2() throws IOException {
-        return hits.size();
+        return hits;
     }
 
     public Area getInput() throws IOException {
