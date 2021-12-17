@@ -4,6 +4,7 @@ import nl.codeengineer.aoc.AocSolver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -28,9 +29,8 @@ public class Day16 implements AocSolver {
     }
 
     public int calcVersionSum(Packet packet) {
-        int total = 0;
+        int total = packet.version;
 
-        total = total + packet.version;
         for (Packet sub: packet.subPackets) {
             total = total + calcVersionSum(sub);
         }
@@ -93,16 +93,14 @@ public class Day16 implements AocSolver {
             String lengthTypeId = packetString.substring(i, i+1);
             i++;
             if (lengthTypeId.equals("0")) {
-                String lengthString = packetString.substring(i, i+15);
-                int bitLength = Integer.parseInt(lengthString, 2);
+                int bitLength = Integer.parseInt(packetString.substring(i, i+15), 2);
                 i = i + 15;
                 int end = i + bitLength;
                 while (i < end) {
                     i = parseOnePacket(packetString, i, packet.subPackets);
                 }
             } else {
-                String numPacketsString = packetString.substring(i, i+11);
-                int numPackets = Integer.parseInt(numPacketsString, 2);
+                int numPackets = Integer.parseInt(packetString.substring(i, i+11), 2);
                 i = i+ 11;
                 for (int k = 0; k < numPackets; k++) {
                     i = parseOnePacket(packetString, i, packet.subPackets);
