@@ -57,12 +57,12 @@ public class Day15  implements AocSolver {
     }
 
     public void printMap(Node[][] map) {
-        for (int y = 0; y < map.length; y++) {
-            StringBuilder line = new StringBuilder();
-            for (int x = 0; x < map[0].length; x++) {
-                line.append(map[y][x] == null ? " " : map[y][x].weight );
+        for (Node[] line : map) {
+            StringBuilder lineStr = new StringBuilder();
+            for (Node node: line) {
+                lineStr.append(node == null ? " " : node.weight );
             }
-            System.out.println(line);
+            System.out.println(lineStr);
         }
     }
 
@@ -75,8 +75,7 @@ public class Day15  implements AocSolver {
         pq.add(startNode);
 
         while (!pq.isEmpty()) {
-            Node evalNode = getNodeWithLowestDistance(pq);
-            pq.remove(evalNode);
+            Node evalNode = pq.remove();
             settledNodes.add(evalNode);
             evalNeighbors(evalNode, settledNodes, pq);
         }
@@ -94,11 +93,6 @@ public class Day15  implements AocSolver {
                 }
             }
         });
-    }
-
-
-    public Node getNodeWithLowestDistance(PriorityQueue<Node> pq) {
-        return pq.peek();
     }
 
     private Node[][] getInput() throws IOException {
