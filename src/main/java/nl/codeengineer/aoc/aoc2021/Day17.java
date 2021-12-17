@@ -14,8 +14,6 @@ public class Day17  implements AocSolver {
     public long part1() throws IOException {
         final Area area = getInput();
 
-        int steps = 0;
-
         int startVx = 1;
         int startVy = area.ey;
         int endVx = area.ex;
@@ -34,7 +32,6 @@ public class Day17  implements AocSolver {
 
                 while (!area.isHit(probe.getX(), probe.getY()) && probe.getX() <= area.ex && probe.getY() >= area.ey) {
                     probe.doStep();
-                    steps++;
                     if (maxYThisRound < probe.getY()) {
                         maxYThisRound = probe.getY();
                     }
@@ -49,7 +46,6 @@ public class Day17  implements AocSolver {
             }
         }
 
-        System.out.println(steps);
         return maxY;
     }
 
