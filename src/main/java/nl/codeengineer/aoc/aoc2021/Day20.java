@@ -20,7 +20,8 @@ public class Day20 implements AocSolver {
 
         boolean infinitePixel = false;
         for (int i = 0; i < 2; i++) {
-            infinitePixel = doStep(infinitePixel);
+            image = enhance(image, enhancementAlgo, infinitePixel);
+            infinitePixel = infinitePixel ? enhancementAlgo[511] : enhancementAlgo[0];
         }
 
         return countPixels(image);
@@ -32,21 +33,11 @@ public class Day20 implements AocSolver {
 
         boolean infinitePixel = false;
         for (int i = 0; i < 50; i++) {
-            infinitePixel = doStep(infinitePixel);
+            image = enhance(image, enhancementAlgo, infinitePixel);
+            infinitePixel = infinitePixel ? enhancementAlgo[511] : enhancementAlgo[0];
         }
 
         return countPixels(image);
-    }
-
-    private boolean doStep(boolean infinitePixel) {
-        image = enhance(image, enhancementAlgo, infinitePixel);
-
-        if (infinitePixel) {
-            infinitePixel = enhancementAlgo[511];
-        } else {
-            infinitePixel = enhancementAlgo[0];
-        }
-        return infinitePixel;
     }
 
     public long countPixels(boolean[][] image) {
