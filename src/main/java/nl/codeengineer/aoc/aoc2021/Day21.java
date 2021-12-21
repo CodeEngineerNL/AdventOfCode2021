@@ -105,27 +105,6 @@ public class Day21 implements AocSolver {
             this.position = position;
             this.score = score;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Player player = (Player) o;
-            return position == player.position && score == player.score;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(position, score);
-        }
-
-        @Override
-        public String toString() {
-            return "Player{" +
-                    "position=" + position +
-                    ", score=" + score +
-                    '}';
-        }
     }
 
     public record Contest(int p1pos, int p1score, int p2pos, int p2score, boolean p1sTurn){}
