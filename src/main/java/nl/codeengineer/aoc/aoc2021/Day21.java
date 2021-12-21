@@ -41,12 +41,9 @@ public class Day21 implements AocSolver {
 
     @Override
     public long part2() throws IOException {
-       Map<Contest, Long> contestCounts = new HashMap<>();
+        Map<Contest, Long> contestCounts = new HashMap<>();
 
-        Contest start= new Contest(
-                5,0,8,0,true
-        );
-
+        Contest start= new Contest(5,0,8,0,true);
         contestCounts.put(start, 1L);
 
         long[] winCounts = new long[2];
@@ -71,12 +68,8 @@ public class Day21 implements AocSolver {
                             position = 1 + (position - 1) % 10;
                             score += position;
 
-                            if (score >=21) {
-                                if (current.p1sTurn) {
-                                    winCounts[0] += value;
-                                } else {
-                                    winCounts[1] += value;
-                                }
+                            if (score >= 21) {
+                                winCounts[current.p1sTurn ? 0 : 1] += value;
                                 continue;
                             }
 
